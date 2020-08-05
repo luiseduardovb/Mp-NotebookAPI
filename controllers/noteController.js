@@ -2,7 +2,7 @@ const { Note } = require("../db/models");
 const { Notebook } = require("../db/models");
 
 exports.noteList = (req, res) => {
-  Note.findAll({
+  const notes = Note.findAll({
     attributes: { exclude: ["createdAt", "updatedAt"] },
     include: {
       model: Notebook,
@@ -11,5 +11,5 @@ exports.noteList = (req, res) => {
     },
   });
 
-  res.json(note);
+  res.json(notes);
 };

@@ -24,8 +24,8 @@ exports.notebookCreate = (req, res) => {
 };
 
 exports.notebookList = (req, res) => {
-  Notebook.findAll({
-    attributes: ["id", "name"],
+  const _notebooks = Notebook.findAll({
+    attributes: { exclude: ["createdAt", "updatedAt"] },
     include: [
       {
         model: Note,
@@ -35,5 +35,5 @@ exports.notebookList = (req, res) => {
     ],
   });
 
-  res.json(notebooks);
+  res.json(_notebooks);
 };
