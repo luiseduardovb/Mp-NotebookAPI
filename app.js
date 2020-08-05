@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const db = require("./db");
-const { Note } = require("./db/models");
 
 // Routes
 const noteRoutes = require("./routes/notes");
@@ -13,7 +12,7 @@ const app = express();
 const run = async () => {
   try {
     await db.sync({
-      /*alter: true*/
+      alter: true,
     });
     console.log("Connection to the database successful!");
   } catch (error) {

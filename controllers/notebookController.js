@@ -3,6 +3,7 @@ let notebooks = require("../notebooks");
 
 const slugify = require("slugify");
 const { Notebook } = require("../db/models");
+const { Note } = require("../db/models");
 
 exports.noteCreate = async (req, res) => {
   try {
@@ -23,5 +24,16 @@ exports.notebookCreate = (req, res) => {
 };
 
 exports.notebookList = (req, res) => {
+  Notebook.findAll({
+    attributes: ["id", "name"],
+    include: [
+      {
+        model: Note,
+        as: "notes",
+        attributes: ["id"],
+      },
+    ],
+  });
+
   res.json(notebooks);
 };
