@@ -9,6 +9,9 @@ Notebook.init(
     name: {
       type: DataTypes.STRING,
     },
+    slug: {
+      type: DataTypes.STRING,
+    },
   },
   { sequelize: db }
 );

@@ -5,6 +5,7 @@ Notebook.hasMany(Note, {
   as: "notes",
   foreignKey: { fieldName: "notebookId", allowNull: false },
 });
+
 Note.belongsTo(Notebook, { as: "notebook" });
 
 module.exports = {

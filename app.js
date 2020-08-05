@@ -9,21 +9,33 @@ const notebookRoutes = require("./routes/notebooks");
 
 const app = express();
 
+app.use(cors());
+app.use(bodyParser.json());
+
+//Routers
+app.use("/notebooks", notebookRoutes);
+app.use("/notes", noteRoutes);
+
+// Non Existing Path Middleware
+app.use((req, res, next) => {
+  // res.status(404).json({ message: "Path Not Found" });
+  const err = new Error("Path not Found");
+  err.status = 404;
+  next(error);
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
+  res.json(err.message || "Internal Server Error");
+});
+
 const run = async () => {
   try {
-    await db.sync({
-      alter: true,
-    });
-    console.log("Connection to the database successful!");
+    await db.sync();
   } catch (error) {
-    console.error("Error connecting to the database: ", error);
+    console.log("run", error);
   }
-
-  app.use(cors());
-  app.use(bodyParser.json());
-
-  app.use("/notebooks", notebookRoutes);
-  app.use("/notes", noteRoutes);
 
   await app.listen(8000, () => {
     console.log("The application is running on localhost:8000");
