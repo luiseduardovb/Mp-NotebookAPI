@@ -1,16 +1,6 @@
 const { Tag } = require("../db/models");
 const { Note } = require("../db/models");
 
-//Fetch Tag
-exports.fetchTag = async (tagId, next) => {
-  try {
-    const tag = await Note.findByPk(tagId);
-    return tag;
-  } catch (error) {
-    next(error);
-  }
-};
-
 //Create Tag
 exports.tagCreate = async (req, res, next) => {
   try {
@@ -21,15 +11,24 @@ exports.tagCreate = async (req, res, next) => {
   }
 };
 
-//Tag List
+//Fetch Tag
+exports.fetchTag = async (tagId, next) => {
+  try {
+    const tag = await Note.findByPk(tagId);
+    return tag;
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Tag List
 
 exports.tagList = async (req, res, next) => {
   try {
     const tags = await Tag.findAll({
-      attributes: { exclude: ["tagId", "createdAt", "updatedAt"] },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
       include: {
-        model: Tag,
-        as: "tags",
+        model: Note,
         attributes: ["name"],
       },
     });

@@ -60,15 +60,14 @@ exports.notebookDelete = async (req, res, next) => {
 
 exports.noteCreate = async (req, res, next) => {
   try {
-    // req.body.tagId = req.tag.id;
-    // const retrieveData = req.body.tagId;
     req.body.notebookId = req.notebook.id;
     const newNote = await Note.create(req.body);
-
-    // if (newNote) {
-    //   return Note.include(req.body.tagId);
-    // }
-
+    const selectedTag = req.body.tag;
+    const noteAndTag = {
+      NoteId: newNote.id,
+      TagId: selectedTag,
+    };
+    await TagName.create(noteAndTag);
     res.status(201).json(newNote);
   } catch (error) {
     next(error);

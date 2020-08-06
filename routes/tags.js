@@ -22,6 +22,6 @@ router.param("tagId", async (req, res, next, tagId) => {
 router.get("/tags", tagList);
 
 //Tag Create
-router.post("/:tagId//tags", tagCreate);
+router.post("/tags", tagCreate);
 
 module.exports = router;
