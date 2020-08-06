@@ -11,6 +11,9 @@ Note.init(
     body: {
       type: DataTypes.STRING,
     },
+    tags: {
+      type: DataTypes.STRING,
+    },
   },
   { sequelize: db }
 );

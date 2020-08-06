@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const db = require("./db");
 
 // Routes
+const tagRoutes = require("./routes/tags");
 const noteRoutes = require("./routes/notes");
 const notebookRoutes = require("./routes/notebooks");
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 //Routers
 app.use("/notebooks", notebookRoutes);
 app.use("/notes", noteRoutes);
+app.use("/tags", tagRoutes);
 
 // Non Existing Path Middleware
 app.use((req, res, next) => {
@@ -32,7 +34,7 @@ app.use((err, req, res, next) => {
 
 const run = async () => {
   try {
-    await db.sync();
+    await db.sync({ alter: true });
   } catch (error) {
     console.log("run", error);
   }
