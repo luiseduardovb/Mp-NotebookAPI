@@ -1,4 +1,4 @@
-const { Notebook } = require("../db/models");
+const { Notebook, Tag, TagName } = require("../db/models");
 const { Note } = require("../db/models");
 
 exports.fetchNotebook = async (notebookId, next) => {
@@ -60,8 +60,15 @@ exports.notebookDelete = async (req, res, next) => {
 
 exports.noteCreate = async (req, res, next) => {
   try {
+    // req.body.tagId = req.tag.id;
+    // const retrieveData = req.body.tagId;
     req.body.notebookId = req.notebook.id;
     const newNote = await Note.create(req.body);
+
+    // if (newNote) {
+    //   return Note.include(req.body.tagId);
+    // }
+
     res.status(201).json(newNote);
   } catch (error) {
     next(error);

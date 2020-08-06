@@ -11,7 +11,7 @@ Note.init(
     body: {
       type: DataTypes.STRING,
     },
-    tags: {
+    tag: {
       type: DataTypes.STRING,
     },
   },
