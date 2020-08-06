@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const {
   tagList,
-  tagCreate,
   fetchTag,
+  tagCreate,
 } = require("../controllers/tagController");
 
 router.param("tagId", async (req, res, next, tagId) => {
@@ -19,9 +19,9 @@ router.param("tagId", async (req, res, next, tagId) => {
 });
 
 //Tag List
-router.get("/tags", tagList);
+router.get("/", tagList);
 
 //Tag Create
-router.post("/tags", tagCreate);
+router.post("/", tagCreate);
 
 module.exports = router;

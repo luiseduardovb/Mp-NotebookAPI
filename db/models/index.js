@@ -12,12 +12,12 @@ Note.belongsTo(Notebook, { as: "notebook" });
 
 Note.belongsToMany(Tag, {
   through: "TagName",
-  as: "notes",
+  as: "tags",
 });
 
 Tag.belongsToMany(Note, {
   through: "TagName",
-  as: "tags",
+  as: "notes",
 });
 
 module.exports = {

@@ -1,15 +1,5 @@
-const { Tag } = require("../db/models");
+const { Tag, TagName } = require("../db/models");
 const { Note } = require("../db/models");
-
-//Create Tag
-exports.tagCreate = async (req, res, next) => {
-  try {
-    const newTag = await Tag.create(req.body);
-    res.status(201).json(newTag);
-  } catch (error) {
-    next(error);
-  }
-};
 
 //Fetch Tag
 exports.fetchTag = async (tagId, next) => {
@@ -29,10 +19,26 @@ exports.tagList = async (req, res, next) => {
       attributes: { exclude: ["createdAt", "updatedAt"] },
       include: {
         model: Note,
-        attributes: ["name"],
+        as: "notes",
+        attributes: ["title"],
+        through: {
+          model: TagName,
+          // as: "tagName",
+          attributes: ["NoteId"],
+        },
       },
     });
     res.json(tags);
+  } catch (error) {
+    next(error);
+  }
+};
+
+//Create Tag
+exports.tagCreate = async (req, res, next) => {
+  try {
+    const newTag = await Tag.create(req.body);
+    res.status(201).json(newTag);
   } catch (error) {
     next(error);
   }
