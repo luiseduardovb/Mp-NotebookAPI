@@ -35,7 +35,6 @@ exports.notebookCreate = async (req, res, next) => {
     // const slug = slugify(req.body.name, { lower: true });
     const newNotebook = await Notebook.create(req.body);
     res.status(201).json(newNotebook);
-    // notebooks.push(newNotebook); removed this one
   } catch (error) {
     next(error);
   }
